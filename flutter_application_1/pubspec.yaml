@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^4.6.6
+
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +19,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: JosefinSans
+      fonts:
+        - asset: assets/JosefinSans-Regular.ttf
+        - asset: assets/JosefinSans-Bold.ttf
+      
