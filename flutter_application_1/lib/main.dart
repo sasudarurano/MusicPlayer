@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/home.dart';
+import 'package:flutter_application_1/views/player.dart';
+
 
 
 void main() {
@@ -14,6 +16,7 @@ class MainApp extends StatelessWidget {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Home(),
+      // home: const Player(),
       title: 'Music Player App',
       theme: ThemeData(
        fontFamily: "regular",

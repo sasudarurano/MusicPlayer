@@ -4,10 +4,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.2'  // Check the version here
+        classpath 'com.android.tools.build:gradle:8.1.2' // Ensure this is up to date
     }
 }
-
 
 plugins {
     id "com.android.application"
@@ -16,25 +15,25 @@ plugins {
 }
 
 android {
-    namespace = "com.example.flutter_application_1"
-    compileSdkVersion 34  // Update to 34 to meet dependency requirements
-    ndkVersion = flutter.ndkVersion
+    namespace "com.example.flutter_application_1" // Ensure this line is present
+    compileSdkVersion 34
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+ compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+   kotlinOptions {
+        jvmTarget = '17'
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
+        
 
     defaultConfig {
         applicationId = "com.example.flutter_application_1"
         minSdkVersion 21
-        targetSdkVersion 34  // Update to 34 to meet dependency requirements
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        targetSdkVersion 34
+        versionCode flutter.versionCode
+        versionName flutter.versionName 
     }
 
     buildTypes {
@@ -47,4 +46,3 @@ android {
 flutter {
     source = "../.."
 }
-
