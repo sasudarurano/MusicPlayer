@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/home.dart';
 import 'package:flutter_application_1/views/player.dart';
+import 'package:get/get.dart';
 
 
 
@@ -13,7 +14,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Home(),
       // home: const Player(),

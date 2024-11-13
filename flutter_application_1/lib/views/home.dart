@@ -99,13 +99,16 @@ class Home extends StatelessWidget {
                             : null,
                         onTap: () {
                           // Call the playSong method to start playing the selected song
-                          // controller.playSong(snapshot.data![index].uri, index);
+                          controller.playSong(snapshot.data![index].uri, index);
 
                           // Navigate to the Player page
                           Get.to(
-                            () => Player(data: snapshot.data![index]),
+                            () => Player(
+                              data: snapshot.data!
+                              ),
                             transition: Transition.downToUp,
                           );
+                         
                         },
                       ),
                     ),
