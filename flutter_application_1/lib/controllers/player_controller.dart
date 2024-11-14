@@ -12,6 +12,8 @@ class PlayerController extends GetxController {
   var isPlaying = false.obs;
   var isLoading = false; // Flag to prevent rapid calls
 
+  var data = <SongModel>[].obs; // Define the data variable to hold the list of songs
+
   var duration = ''.obs;
   var position = ''.obs;
 
@@ -24,6 +26,10 @@ class PlayerController extends GetxController {
     checkPermission();
     audioPlayer.playerStateStream.listen((state) {
       isPlaying.value = state.playing;
+      if (state.processingState == ProcessingState.completed) {
+        // When the song is complete, play the next song
+        nextSong();
+      }
     });
   }
 
@@ -39,37 +45,48 @@ class PlayerController extends GetxController {
     });
   }
 
-  changeDurationToSeconds(seconds) {
+  void changeDurationToSeconds(int seconds) {
     var duration = Duration(seconds: seconds);
     audioPlayer.seek(duration);
   }
 
- Future<void> playSong(String? uri, int index) async {
-  if (isLoading) return; // Prevent rapid calls
-  isLoading = true; // Set loading flag
+  Future<void> playSong(String? uri, int index) async {
+    if (isLoading) return; // Prevent rapid calls
+    isLoading = true; // Set loading flag
 
-  playIndex.value = index;
+    playIndex.value = index;
 
-  try {
-    await audioPlayer.setAudioSource(
-      AudioSource.uri(
-        Uri.parse(uri!),
-      ),
-    );
-    audioPlayer.play();
-    updatePosition();
-  } catch (e) {
-    Get.snackbar('Error', e.toString());
-    debugPrint(e.toString());
+    try {
+      await audioPlayer.setAudioSource(
+        AudioSource.uri(
+          Uri.parse(uri!),
+        ),
+      );
+      audioPlayer.play();
+      updatePosition();
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+      debugPrint(e.toString());
+    }
+
+    isPlaying.value = true; // Set the play state to true
+    isLoading = false; // Reset loading flag
   }
 
-  isPlaying.value = true; // Set the play state to true
-  isLoading = false; // Reset loading flag
-}
+  void nextSong() {
+    if (playIndex.value < data.length - 1) {
+      playSong(data[playIndex.value + 1].uri, playIndex.value + 1);
+    } else {
+      // Optional: Stop the player or loop back to the start if at the end of the playlist
+      audioPlayer.stop();
+      isPlaying.value = false;
+    }
+  }
+
   checkPermission() async {
-    var perm = await Permission.audio.request();
-    if (perm.isGranted) {
-      return audioQuery.querySongs(
+    var permission = await Permission.storage.request();
+    if (permission.isGranted) {
+      data.value = await audioQuery.querySongs(
         ignoreCase: true,
         orderType: OrderType.ASC_OR_SMALLER,
         sortType: null,
