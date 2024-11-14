@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/home.dart';
 import 'package:flutter_application_1/views/player.dart';
+import 'package:flutter_application_1/views/splashscreen.dart';
 import 'package:get/get.dart';
 
 
@@ -16,13 +17,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      // home: const Home(),
       // home: const Player(),
+      home :  SplashScreen(),
       title: 'Music Player App',
       theme: ThemeData(
        fontFamily: "regular",
        appBarTheme: AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(0, 21, 16, 16),
         elevation: 0,
        ),
       ),
